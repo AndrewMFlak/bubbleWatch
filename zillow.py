@@ -39,7 +39,7 @@ import zillow
 start = "started"
 while start == "started":
     # print(zipCode)
-    # print(zillowAPIkey)
+    print(zillowAPIkey)
     userZip = input("Enter the zipcode you would like to search:  ")
     print(userZip)
     print('workflow confirm')
