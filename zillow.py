@@ -5,43 +5,61 @@ import dotenv
 from dotenv import load_dotenv
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
-zipCode = os.getenv('placeholder')
-zillowAPIkey = os.getenv('zillowAPIkey')
+#=================EnvironmentVariables==================>
+zipCodeGet = os.getenv('citystatezip')
+zwsIdGet = os.getenv('zws-id')
+addressGet = os.getenv('address')
+# citystatezip = os.getenv('citystatezip')
+# rentzestimate = False
 
-#====================Zillow===========================>
-import zillow
-# import pprint
-
-# if __name__=="__main__":
-#     key = ""
-#     with open("./bin/config/zillow_key.conf", 'r') as f:
-#         key = f.readline().replace("\n", "")
-
-#     address = "3400 Pacific Ave., Marina Del Rey, CA"
-#     postal_code = "90292"
-
-#     api = zillow.ValuationApi()
-#     data = api.GetSearchResults(key, address, postal_code)
-
-#     pp = pprint.PrettyPrinter(indent=4)
-#     pp.pprint(data.get_dict())
-
-#     detail_data = api.GetZEstimate(key, data.zpid)
-
-#     comp_data = api.GetComps(key, data.zpid)
-
-#     pp.pprint(comp_data['comps'][1].get_dict())
-
-#     deep_results = api.GetDeepSearchResults(key, "1920 1st Street South Apt 407, Minneapolis, MN", "55454")
-#     pp.pprint(deep_results.get_dict())
 
 #=================Workflow===============================>
-start = "started"
-while start == "started":
-    # print(zipCode)
-    print(zillowAPIkey)
-    userZip = input("Enter the zipcode you would like to search:  ")
-    print(userZip)
-    print('workflow confirm')
-    start = "ended"
+# print(zipCode)
+#print(zwsid)
+#print(address)
+#print(citystatezip)
+# userZip = input("Enter the zipcode you would like to search:  ")
+# print(userZip)
+# start = ""
+# workflowStart()
+def importEnvironmentVariable():
+    import os
+    from os.path import join, dirname
+    import dotenv
+    from dotenv import load_dotenv
+    dotenv_path=join(dirname(__file__),'.env')
+    load_dotenv(dotenv_path)
+    print(os.getenv('address'))
+    print(os.getenv('citystatezip'))
+    print(os.getenv('zws-id'))
+
+def zillowApiCall(importEnvironmentVariable):
+    importEnvironmentVariable
+    from pyzillow.pyzillow import ZillowWrapper, GetDeepSearchResults
+    address = os.getenv('address')
+    print(address)
+    print("address returned")
+    zipcode = os.getenv('citystatezip')
+    print(zipcode)
+    print("zipcode returned")
+    zillow_data = ZillowWrapper(os.getenv("zws-id"))
+    deep_search_response = zillow_data.get_deep_search_results(address,zipcode)
+    result = GetDeepSearchResults(deep_search_response)
+    print(result.zillow_id) 
+    print("Function Done")
+# def zillowPropertyReturn(function):
+    # zillow_id = 'YOUR ZILLOW ID'
+    # ...
+    # zillow_data = ZillowWrapper(YOUR_ZILLOW_API_KEY)
+    # updated_property_details_response = zillow_data.get_updated_property_details(zillow_id)
+    # result = GetUpdatedPropertyDetails(updated_property_details_response)
+    # ...
+    # result.rooms
+
+    # number of rooms of the home
+
+    # The following attributes are currently supported:
+# importEnvironmentVariable()
+zillowApiCall(importEnvironmentVariable())
+print('workflow function completed')
 #=====================Ended================================>
